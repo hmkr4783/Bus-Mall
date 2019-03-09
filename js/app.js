@@ -102,11 +102,14 @@ function tallyUp() {
 
 function mouseClicks(event) {
   //Enables the user to surpass 25 views. shows results after.
-  if (totalClicks >= 25) {
+  if (totalClicks > 24) {
     imgBoxes.removeEventListener('click', mouseClicks);
     tallyUp();
   }
-
+  //If the user clicks on the section(the border around the images), it will give you a message.
+  if (event.target.id === 'boxes') {
+    return alert('Please click on the image!!');
+  }
   //Adds up the number of mouse clicks.
   totalClicks += 1;
   for (var i = 0; i < imgArray.length; i++) {
