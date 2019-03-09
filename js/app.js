@@ -120,6 +120,21 @@ function mouseClicks(event) {
   displayImage();
 }
 
+var stackedBar = new Chart(ctx, {
+  type: 'bar',
+  data: data,
+  options: {
+    scales: {
+      xAxes: [{
+        stacked: true
+      }],
+      yAxes: [{
+        stacked: true
+      }]
+    }
+  }
+});
+
 imgBoxes.addEventListener('click', mouseClicks);
 displayImage();
 
