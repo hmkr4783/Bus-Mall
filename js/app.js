@@ -13,8 +13,8 @@ function randomizedImages() {
 }
 
 ///This Contructor function will enable me to push all images through here
-function AdvertisedProducts(Products, fileType) {
-  this.Products = Products;
+function AdvertisedProducts(products, fileType) {
+  this.products = products;
   this.fileType = fileType;
   this.survey = 0;
   this.views = 0;
@@ -82,7 +82,7 @@ function displayImage() {
   //grabbing all images through the contructor function above.
   for (var i = 0; i < currentImage.length; i++) {
     AdvertisedProducts.images[i].src = imgArray[currentImage[i]].fileType;
-    AdvertisedProducts.images[i].id = imgArray[currentImage[i]].Products;
+    AdvertisedProducts.images[i].id = imgArray[currentImage[i]].products;
     //keeps track of how many times the image is viewed.
     imgArray[currentImage[i]].views += 1;
     AdvertisedProducts.justViewed[i] = currentImage[i];
@@ -95,16 +95,58 @@ function tallyUp() {
   for (var i = 0; i < imgArray.length; i++) {
     var resultsList = document.getElementById('resultsList');
     var liEl = document.createElement('li');
-    liEl.textContent = imgArray[i].Products + ' was chosen ' + imgArray[i].survey + ' times in ' + imgArray[i].views + ' views.';
+    liEl.textContent = imgArray[i].products + ' was chosen ' + imgArray[i].survey + ' times in ' + imgArray[i].views + ' views.';
     resultsList.appendChild(liEl);
   }
 }
+
+
+// Creating the chart that will show the result.
+function chart() {
+  var label = [];
+  var data = [];
+  for (var i = 0; i < imgArray.length; i++) {
+    label[i] = imgArray[i].products;
+    data[i] = imgArray[i].survey;
+  }
+
+// color indications for each one.
+  var colors = ['red', 'orange', 'yellow', 'green', 'blue', 'violet' , 'aliceblue' , 'aqua' , 'burlywood' , 'cadetblue', 'chartreuse' , 'chocolate' , 'coral' , 'cornflowerblue' , 'cornsilk' , 'crimson' , 'cyan' , 'darkblue' , 'darkgoldenrod' , 'fuchsia'];
+
+
+  var ctx = document.getElementById("chart").getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: label,
+      datasets: [{
+        label: 'show # of clicks!',
+        data: data,
+        backgroundColor: colors,
+        borderWidth: 1,
+        borderColor: 'blue',
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero:true
+          }
+        }]
+      }
+    }
+  });
+}
+
+
 
 function mouseClicks(event) {
   //Enables the user to surpass 25 views. shows results after.
   if (totalClicks > 24) {
     imgBoxes.removeEventListener('click', mouseClicks);
     tallyUp();
+    chart();
   }
   //If the user clicks on the section(the border around the images), it will give you a message.
   if (event.target.id === 'boxes') {
@@ -113,27 +155,13 @@ function mouseClicks(event) {
   //Adds up the number of mouse clicks.
   totalClicks += 1;
   for (var i = 0; i < imgArray.length; i++) {
-    if (event.target.id === imgArray[i].Products) {
+    if (event.target.id === imgArray[i].products) {
       imgArray[i].survey += 1;
     }
   }
   displayImage();
 }
 
-var stackedBar = new Chart(ctx, {
-  type: 'bar',
-  data: data,
-  options: {
-    scales: {
-      xAxes: [{
-        stacked: true
-      }],
-      yAxes: [{
-        stacked: true
-      }]
-    }
-  }
-});
 
 imgBoxes.addEventListener('click', mouseClicks);
 displayImage();
