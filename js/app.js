@@ -147,13 +147,20 @@ function mouseClicks(event) {
     imgBoxes.removeEventListener('click', mouseClicks);
     tallyUp();
     chart();
+    localStorage.clear();
   }
+  var imgArrayData = JSON.stringify(imgArray);
+  localStorage.setItem('imgArray' , imgArrayData);
+  var clickTotal = JSON.stringify(totalClicks);
+  localStorage.setItem('clicks' , clickTotal);
+
   //If the user clicks on the section(the border around the images), it will give you a message.
   if (event.target.id === 'boxes') {
     return alert('Please click on the image!!');
   }
   //Adds up the number of mouse clicks.
   totalClicks += 1;
+
   for (var i = 0; i < imgArray.length; i++) {
     if (event.target.id === imgArray[i].products) {
       imgArray[i].survey += 1;
@@ -161,7 +168,6 @@ function mouseClicks(event) {
   }
   displayImage();
 }
-
 
 imgBoxes.addEventListener('click', mouseClicks);
 displayImage();
