@@ -143,12 +143,13 @@ function chart() {
 
 function mouseClicks(event) {
   //Enables the user to surpass 25 views. shows results after.
-  if (totalClicks > 24) {
+  if (totalClicks === 25) {
     imgBoxes.removeEventListener('click', mouseClicks);
     tallyUp();
-    chart();
     localStorage.clear();
+    chart();
   }
+  
   var imgArrayData = JSON.stringify(imgArray);
   localStorage.setItem('imgArray' , imgArrayData);
   var clickTotal = JSON.stringify(totalClicks);
@@ -168,6 +169,7 @@ function mouseClicks(event) {
   }
   displayImage();
 }
+
 
 imgBoxes.addEventListener('click', mouseClicks);
 displayImage();

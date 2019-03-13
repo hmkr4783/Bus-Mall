@@ -7,17 +7,24 @@ body {
     margin: 0 auto;
 }
 
+#boxes{
+    width: 900px;
+    height: 200px;
+    margin: 0 auto;
+    margin-bottom: 100px;
+}
+
 img {
     object-fit: contain;
-    width: 25%;
-    height: 25%;
+    width: 270px;
+    height: 100%;
     margin: 10px;
 }
 
 body section li {
-color: rgb(52, 16, 151);
+    color: rgb(52, 16, 151);
 }
 
 h1 {
-text-align: center;
+    text-align: center;
 }
